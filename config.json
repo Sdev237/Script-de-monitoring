@@ -1,0 +1,40 @@
+{
+  "snmp": {
+    "community": "public",
+    "timeout": 3,
+    "retries": 3
+  },
+  "targets": [
+    {
+      "name": "Serveur Principal",
+      "ip": "192.168.1.100",
+      "port": 161
+    },
+    {
+      "name": "Serveur Secondaire",
+      "ip": "192.168.1.101",
+      "port": 161
+    }
+  ],
+  "thresholds": {
+    "cpu_warning": 70,
+    "cpu_critical": 90,
+    "memory_warning": 80,
+    "memory_critical": 95,
+    "disk_warning": 85,
+    "disk_critical": 95,
+    "network_warning": 1000000
+  },
+  "alerts": {
+    "email_enabled": true,
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "sender_email": "jedeon@example.com",
+    "sender_password": "",
+    "recipients": ["jedeon@adminexample.com"]
+  },
+  "monitoring": {
+    "interval": 60,
+    "log_file": "monitoring.log"
+  }
+}

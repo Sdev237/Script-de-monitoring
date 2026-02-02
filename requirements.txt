@@ -1,0 +1,5 @@
+pysnmp==4.4.12
+pysnmp-mibs==0.1.7
+pycryptodomex==3.19.0
+pyasn1==0.5.1
+pyasn1-modules==0.3.0 
