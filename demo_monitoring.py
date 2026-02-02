@@ -140,7 +140,7 @@ class SNMPSimulator:
         """Récupère les métriques d'une cible"""
         return self.metrics.get(target_name, {})
 
-
+def create_demo_config():
     """Crée une configuration de démonstration pour le monitoring"""
     demo_config = {
         "snmp": {
