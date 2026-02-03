@@ -148,18 +148,7 @@ class SystemMonitor:
             metrics['memory_used'] = memory_used
             metrics['memory_percent'] = memory_percent
         
-        # Disk Usage
-        disk_usage = self.get_snmp_value(target, self.snmp_oids['disk_usage'])
-        if disk_usage is not None:
-            metrics['disk_usage'] = disk_usage
-        
-        # Network (calcul de la bande passante)
-        network_in = self.get_snmp_value(target, self.snmp_oids['network_in'])
-        network_out = self.get_snmp_value(target, self.snmp_oids['network_out'])
-        if network_in and network_out:
-            metrics['network_in'] = network_in
-            metrics['network_out'] = network_out
-            metrics['network_total'] = network_in + network_out
+    
         
         return metrics
     

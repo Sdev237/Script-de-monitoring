@@ -41,22 +41,6 @@ if "%choix%"=="3" (
     goto :fin
 )
 
-if "%choix%"=="4" (
-    echo.
-    echo 🎭 Lancement de la démonstration...
-    python demo_monitoring.py
-    goto :fin
-)
-
-if "%choix%"=="5" (
-    echo.
-    echo 📦 Installation des dépendances...
-    pip install -r requirements.txt
-    echo.
-    echo ✅ Installation terminée !
-    pause
-    goto :fin
-)
 
 if "%choix%"=="6" (
     echo.
