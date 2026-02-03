@@ -37,7 +37,29 @@ case $choix in
         echo "🔍 Lancement du test SNMP..."
         python3 test_snmp.py
         ;;
- 
+    4)
+        echo
+        echo "🎭 Lancement de la démonstration..."
+        python3 demo_monitoring.py
+        ;;
+    5)
+        echo
+        echo "📦 Installation des dépendances..."
+        pip3 install -r requirements.txt
+        echo
+        echo "✅ Installation terminée !"
+        read -p "Appuyez sur Entrée pour continuer..."
+        ;;
+    6)
+        echo
+        echo "👋 Au revoir !"
+        exit 0
+        ;;
+    *)
+        echo
+        echo "❌ Choix invalide !"
+        read -p "Appuyez sur Entrée pour continuer..."
+        ;;
 esac
 
 echo
