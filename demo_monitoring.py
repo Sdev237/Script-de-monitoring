@@ -54,7 +54,8 @@ class SNMPSimulator:
             json.dump(demo_config, f, indent=4, ensure_ascii=False)
         
         return demo_config
-  
+    
+    def generate_metrics(self, target):
         """Génère des métriques simulées pour une cible"""
         base_config = self.config["simulation"]
         anomaly_config = self.config["anomalies"]

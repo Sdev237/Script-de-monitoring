@@ -9,7 +9,15 @@ echo "   🚀 Script de Monitoring Système"
 echo "========================================"
 echo
 
-
+echo "Choisissez une option :"
+echo
+echo "1. Interface graphique (recommandée)"
+echo "2. Monitoring en ligne de commande"
+echo "3. Test SNMP"
+echo "4. Démonstration"
+echo "5. Installer les dépendances"
+echo "6. Quitter"
+echo
 
 read -p "Votre choix (1-6) : " choix
 
