@@ -91,6 +91,52 @@ def test_snmp_connection(ip, community="public", port=161, timeout=3):
         print("✅ Connexion SNMP complète!")
         return True
 
+def test_multiple_targets(targets):
+    """Teste plusieurs cibles"""
+    print("🚀 Test de connectivité SNMP multiple")
+    print("=" * 60)
+    
+    results = {}
+    
+    for target in targets:
+        print(f"\n🎯 Test de {target['name']} ({target['ip']})")
+        success = test_snmp_connection(
+            target['ip'], 
+            community=target.get('community', 'public'),
+            port=target.get('port', 161)
+        )
+        results[target['name']] = success
+    
+    print("\n" + "=" * 60)
+    print("📋 Résumé des tests:")
+    
+    for name, success in results.items():
+        status = "✅ OK" if success else "❌ ÉCHEC"
+        print(f"   {name}: {status}")
+    
+    return results
+
+def interactive_test():
+    """Test interactif"""
+    print("🔧 Test SNMP Interactif")
+    print("=" * 30)
+    
+    ip = input("Adresse IP de la cible: ").strip()
+    if not ip:
+        print("❌ Adresse IP requise")
+        return
+    
+    community = input("Community SNMP (défaut: public): ").strip() or "public"
+    port = input("Port SNMP (défaut: 161): ").strip() or "161"
+    
+    try:
+        port = int(port)
+    except ValueError:
+        print("❌ Port invalide")
+        return
+    
+    test_snmp_connection(ip, community, port)
+
 def main():
     """Fonction principale"""
     print("🔍 Script de Test SNMP")

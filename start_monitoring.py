@@ -33,6 +33,20 @@ def main():
         
         # Démarrer le monitoring
         monitor.start_monitoring()
+        
+    except KeyboardInterrupt:
+        print("\n🛑 Arrêt demandé par l'utilisateur")
+        if 'monitor' in locals():
+            monitor.stop_monitoring()
+        print("✅ Monitoring arrêté proprement")
+        
+    except Exception as e:
+        print(f"❌ Erreur: {str(e)}")
+        print("\n💡 Vérifiez:")
+        print("   - La configuration SNMP")
+        print("   - La connectivité réseau")
+        print("   - Les permissions d'accès")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main() 
