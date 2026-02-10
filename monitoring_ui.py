@@ -77,7 +77,90 @@ class MonitoringUI:
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, 
                               relief=tk.SUNKEN, anchor=tk.W)
         status_bar.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
-   
+    
+    def setup_config_tab(self, notebook):
+        """Configure l'onglet de configuration"""
+        config_frame = ttk.Frame(notebook)
+        notebook.add(config_frame, text="Configuration")
+        
+        # Configuration SNMP
+        snmp_frame = ttk.LabelFrame(config_frame, text="Configuration SNMP", padding="10")
+        snmp_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        ttk.Label(snmp_frame, text="Community:").grid(row=0, column=0, sticky=tk.W)
+        self.community_var = tk.StringVar(value="public")
+        ttk.Entry(snmp_frame, textvariable=self.community_var).grid(row=0, column=1, padx=(10, 0))
+        
+        ttk.Label(snmp_frame, text="Timeout (s):").grid(row=1, column=0, sticky=tk.W, pady=(10, 0))
+        self.timeout_var = tk.StringVar(value="3")
+        ttk.Entry(snmp_frame, textvariable=self.timeout_var).grid(row=1, column=1, padx=(10, 0), pady=(10, 0))
+        
+        # Cibles de monitoring
+        targets_frame = ttk.LabelFrame(config_frame, text="Cibles de Monitoring", padding="10")
+        targets_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        # Liste des cibles
+        self.targets_tree = ttk.Treeview(targets_frame, columns=('name', 'ip', 'port'), show='headings', height=5)
+        self.targets_tree.heading('name', text='Nom')
+        self.targets_tree.heading('ip', text='Adresse IP')
+        self.targets_tree.heading('port', text='Port')
+        self.targets_tree.grid(row=0, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        # Boutons pour les cibles
+        ttk.Button(targets_frame, text="Ajouter", command=self.add_target).grid(row=1, column=0, padx=(0, 5))
+        ttk.Button(targets_frame, text="Modifier", command=self.edit_target).grid(row=1, column=1, padx=5)
+        ttk.Button(targets_frame, text="Supprimer", command=self.remove_target).grid(row=1, column=2, padx=(5, 0))
+        
+        # Seuils d'alerte
+        thresholds_frame = ttk.LabelFrame(config_frame, text="Seuils d'Alerte", padding="10")
+        thresholds_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        # CPU
+        ttk.Label(thresholds_frame, text="CPU Warning (%):").grid(row=0, column=0, sticky=tk.W)
+        self.cpu_warning_var = tk.StringVar(value="70")
+        ttk.Entry(thresholds_frame, textvariable=self.cpu_warning_var).grid(row=0, column=1, padx=(10, 0))
+        
+        ttk.Label(thresholds_frame, text="CPU Critical (%):").grid(row=0, column=2, sticky=tk.W, padx=(20, 0))
+        self.cpu_critical_var = tk.StringVar(value="90")
+        ttk.Entry(thresholds_frame, textvariable=self.cpu_critical_var).grid(row=0, column=3, padx=(10, 0))
+        
+        # Mémoire
+        ttk.Label(thresholds_frame, text="Mémoire Warning (%):").grid(row=1, column=0, sticky=tk.W, pady=(10, 0))
+        self.memory_warning_var = tk.StringVar(value="80")
+        ttk.Entry(thresholds_frame, textvariable=self.memory_warning_var).grid(row=1, column=1, padx=(10, 0), pady=(10, 0))
+        
+        ttk.Label(thresholds_frame, text="Mémoire Critical (%):").grid(row=1, column=2, sticky=tk.W, padx=(20, 0), pady=(10, 0))
+        self.memory_critical_var = tk.StringVar(value="95")
+        ttk.Entry(thresholds_frame, textvariable=self.memory_critical_var).grid(row=1, column=3, padx=(10, 0), pady=(10, 0))
+        
+        # Configuration email
+        email_frame = ttk.LabelFrame(config_frame, text="Configuration Email", padding="10")
+        email_frame.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        self.email_enabled_var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(email_frame, text="Activer les alertes email", 
+                       variable=self.email_enabled_var).grid(row=0, column=0, columnspan=2, sticky=tk.W)
+        
+        ttk.Label(email_frame, text="Serveur SMTP:").grid(row=1, column=0, sticky=tk.W, pady=(10, 0))
+        self.smtp_server_var = tk.StringVar(value="smtp.gmail.com")
+        ttk.Entry(email_frame, textvariable=self.smtp_server_var).grid(row=1, column=1, padx=(10, 0), pady=(10, 0))
+        
+        ttk.Label(email_frame, text="Port SMTP:").grid(row=2, column=0, sticky=tk.W, pady=(10, 0))
+        self.smtp_port_var = tk.StringVar(value="587")
+        ttk.Entry(email_frame, textvariable=self.smtp_port_var).grid(row=2, column=1, padx=(10, 0), pady=(10, 0))
+        
+        ttk.Label(email_frame, text="Email expéditeur:").grid(row=3, column=0, sticky=tk.W, pady=(10, 0))
+        self.sender_email_var = tk.StringVar(value="monitoring@example.com")
+        ttk.Entry(email_frame, textvariable=self.sender_email_var).grid(row=3, column=1, padx=(10, 0), pady=(10, 0))
+        
+        ttk.Label(email_frame, text="Mot de passe:").grid(row=4, column=0, sticky=tk.W, pady=(10, 0))
+        self.sender_password_var = tk.StringVar()
+        ttk.Entry(email_frame, textvariable=self.sender_password_var, show="*").grid(row=4, column=1, padx=(10, 0), pady=(10, 0))
+        
+        # Bouton de sauvegarde
+        ttk.Button(config_frame, text="Sauvegarder la Configuration", 
+                  command=self.save_config).grid(row=4, column=0, pady=(20, 0))
+    
     def setup_monitoring_tab(self, notebook):
         """Configure l'onglet de monitoring"""
         monitoring_frame = ttk.Frame(notebook)
